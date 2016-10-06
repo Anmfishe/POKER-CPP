@@ -11,8 +11,8 @@ public:
 	LinkedList() {
 		size = 0;
 	};
-	void push_back(T t) {
-		node *temp = new node();
+	void push_back(const T &t) {
+		node *temp = new node;
 		temp->val = t;
 		if (head == NULL) {
 			head = tail = temp;
@@ -110,6 +110,7 @@ public:
 				delete temp;
 				return true;
 			}
+			curr = curr->next;
 		}	
 		if (tail->val == t) {
 			tail = curr;
@@ -148,7 +149,7 @@ public:
 	void print() {
 		node *curr = head;
 		while (curr != NULL) {
-			cout << curr->val << " ";
+			cout << curr->val << endl;
 			curr = curr->next;
 		}
 		cout << endl;
