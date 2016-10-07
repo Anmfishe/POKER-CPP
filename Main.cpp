@@ -6,6 +6,11 @@
 
 using namespace std;
 
+//Evaluate hand
+//Swap
+//Memory leaks
+//Sort hand
+
 
 struct Card {
 	string suit;
@@ -58,6 +63,25 @@ void print_ante_message() {
 }
 int random_range(int max) {
 	return rand() % max;
+}
+void sort_hand(LinkedList<Card> &hand) {
+	Card temp_hand[5];
+	for (int j = 0; j < 5; j++) {
+		int least_index;
+		int least_val = 15;
+		for (int i = 0; i < hand.getSize(); i++) {
+			Card c = hand.find_at_index(i);
+			if (c.val < least_val) {
+				least_index = i;
+				least_val = c.val;
+			}
+		}
+		temp_hand[j] = hand.find_at_index(least_index);
+		hand.find_and_delete_at_index(least_index);
+	}
+	for (int i = 0; i < 5; i++) {
+		hand.push_back(temp_hand[i]);
+	}
 }
 void fill_deck(LinkedList<Card> &deck) {
 	Card cards[52] = {
@@ -164,6 +188,7 @@ bool handle_input(Player &player, LinkedList<Card> &deck, int &num_cards_swapped
 			player.clear_hand();
 			num_cards_swapped = 5;
 			fill_hand(player.hand, deck);
+			sort_hand(player.hand);
 			print_hand(player.hand, num_cards_swapped, false);
 			player.money += evaluate_hand(player.hand);
 			return true;
@@ -172,6 +197,7 @@ bool handle_input(Player &player, LinkedList<Card> &deck, int &num_cards_swapped
 		else if (input == "ALL") 
 		{
 			num_cards_swapped = 0;
+			sort_hand(player.hand);
 			print_hand(player.hand, num_cards_swapped, false);
 			player.money += evaluate_hand(player.hand);
 			return true;
@@ -179,6 +205,7 @@ bool handle_input(Player &player, LinkedList<Card> &deck, int &num_cards_swapped
 		}
 		else if (evaluate_input(input, player.hand, deck, num_cards_swapped)) 
 		{
+			sort_hand(player.hand);
 			print_hand(player.hand, num_cards_swapped, false);
 			player.money += evaluate_hand(player.hand);
 			return true;
@@ -205,15 +232,15 @@ int main() {
 		print_ante_message();
 		player.money--;
 		player.print_money();
+		sort_hand(player.hand);
 		print_hand(player.hand, num_cards_swapped, true);
 		if(!handle_input(player, the_deck, num_cards_swapped)) break;
 		if (player.money <= 0) { cout << endl << "Out of money. GAME OVER" << endl; system("PAUSE"); break; }
 		player.hand.clear();
 		fill_hand(player.hand, the_deck);
-		cout << endl << "Hit any button to continue" << endl;
+		cout << endl << "Hit ENTER to continue" << endl;
+		cin.ignore(1000, '\n');
 		cin.get();
-		system("PAUSE");
-
 	}
 	return 0;
 }
