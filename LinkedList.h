@@ -122,7 +122,7 @@ public:
 		}
 		return false;
 	};
-	T find_at_index(int index) {
+	T find_at_index(int index) const {
 		if (index > size) {
 			return T();
 		}
@@ -134,6 +134,17 @@ public:
 	};
 	void find_and_delete_at_index(int index) {
 		find_and_delete(find_at_index(index));
+	};
+	bool set_at_index(int index, T t) {
+		if (index >= size) return false;
+		int i = 0;
+		node *curr = head;
+		while (i != index) {
+			curr = curr->next;
+			i++;
+		}
+		curr->val = t;
+		return true;
 	};
 	bool clear() {
 		node* curr = head;
