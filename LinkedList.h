@@ -132,6 +132,9 @@ public:
 		}
 		return curr->val;
 	};
+	void find_and_delete_at_index(int index) {
+		find_and_delete(find_at_index(index));
+	};
 	bool clear() {
 		node* curr = head;
 		while (curr != NULL) {
