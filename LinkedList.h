@@ -148,16 +148,16 @@ public:
 	};
 	bool clear() {
 		node* curr = head;
-		while (curr != NULL) {
-			head = head->next;
-			delete curr;
-			curr = head;
+		while (head != 0) {
+			curr = head->next;
+			delete head;
+			head = curr;
 		}
 		head = tail = NULL;
 		size = 0;
 		return true;
 	};
-	int getSize() {
+	int getSize() const{
 		return size;
 	};
 	void print() {
@@ -168,7 +168,9 @@ public:
 		}
 		cout << endl;
 	};
-	~LinkedList() {};
+	~LinkedList() {
+		clear();
+	};
 private:
 	struct node {
 		T val;

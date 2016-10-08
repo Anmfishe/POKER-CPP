@@ -1,3 +1,15 @@
+#define _CRTDBG_MAP_ALLOC
+#define _CRTDBG_MAP_ALLOC_NEW
+#include <cstdlib>
+#include <crtdbg.h>
+#ifdef _DEBUG
+#ifndef DBG_NEW
+#define DBG_NEW new ( _NORMAL_BLOCK , __FILE__ , __LINE__ )
+#define new DBG_NEW
+#endif
+#endif
+
+
 #include <stdlib.h>
 #include <time.h>
 #include <iostream>
@@ -44,6 +56,9 @@ struct Player {
 	void clear_hand() {
 		hand.clear();
 	};
+	~Player() {
+		hand.clear();
+	};
 };
 void print_options() {
 	cout << endl << "OPTIONS:" << endl
@@ -55,8 +70,16 @@ void print_options() {
 		<< "	EXIT - Quit out of the game" << endl
 		<< "	SWAP - Cheat and swap a card from your hand with a random card from the deck" << endl;
 }
-void print_decksize(LinkedList<Card> deck) {
+void print_decksize(const LinkedList<Card> &deck) {
 	cout << endl << "Cards left in deck: " << deck.getSize() << endl;
+}
+void print_deck(const LinkedList<Card> &deck) {
+	for (int i = 0; i < deck.getSize(); i++) {
+		Card c = deck.find_at_index(i);
+		if (i % 5 == 0) cout << endl;
+		if(i != deck.getSize()-1) cout << c.face << " of " << c.suit << ", ";
+		else cout << c.face << " of " << c.suit;
+	}
 }
 void print_ante_message() {
 	cout << endl << "1 dollar paid to play" << endl;
@@ -306,7 +329,7 @@ bool handle_input(Player &player, LinkedList<Card> &deck) {
 
 		if (input == "EXIT") return false;
 		else if (input == "DECK") {
-			deck.print(); 
+			print_deck(deck);
 			print_options();
 		}
 		else if (input == "MONEY") {
@@ -354,25 +377,28 @@ bool handle_input(Player &player, LinkedList<Card> &deck) {
 	return 0;
 }
 int main() {
-	Player player;
-	LinkedList<Card> the_deck;
-	fill_deck(the_deck);
-	fill_hand(player.hand, the_deck);
-	while (true) {
-		print_options();
-		print_decksize(the_deck);
-		print_ante_message();
-		player.money--;
-		player.print_money();
-		sort_hand(player.hand);
-		print_hand(player.hand, true);
-		if(!handle_input(player, the_deck)) break;
-		if (player.money <= 0) { cout << endl << "Out of money. GAME OVER" << endl; system("PAUSE"); break; }
-		player.hand.clear();
+	{
+		Player player;
+		LinkedList<Card> the_deck;
+		fill_deck(the_deck);
 		fill_hand(player.hand, the_deck);
-		cout << endl << "Hit ENTER to continue" << endl;
-		cin.ignore(1000, '\n');
-		cin.get();
+		while (true) {
+			print_options();
+			print_decksize(the_deck);
+			print_ante_message();
+			player.money--;
+			player.print_money();
+			sort_hand(player.hand);
+			print_hand(player.hand, true);
+			if (!handle_input(player, the_deck)) break;
+			if (player.money <= 0) { cout << endl << "Out of money. GAME OVER" << endl; system("PAUSE"); break; }
+			player.hand.clear();
+			fill_hand(player.hand, the_deck);
+			cout << endl << "Hit ENTER to continue" << endl;
+			cin.ignore(1000, '\n');
+			cin.get();
+		}
 	}
+	_CrtDumpMemoryLeaks();
 	return 0;
 }
