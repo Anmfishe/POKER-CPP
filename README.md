@@ -10,3 +10,12 @@ Sort player's hand
 Player's hand is a linked list
 
 CREATE YOUR OWN: Linked list class is templated
+
+Other notes:
+
+I made it so the player could enter unsorted letters, not sure if that was required
+
+Pretty tough, haven't had to overload operators in a long time. 7.5/10 difficulty
+
+It should be noted on the syllabus that the memory leaks function should be called AFTER all destructors have been run.
+I thought I had an error for a long time thinking that the function would run after my destructors, not before
