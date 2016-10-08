@@ -13,6 +13,8 @@ CREATE YOUR OWN: Linked list class is templated
 
 Other notes:
 
+Swapping a card discards the original card instead of putting it back into the deck as how we discussed
+
 I haven't had memory leaks on my last 10 runs, it should be clean
 
 I made it so the player could enter unsorted letters, not sure if that was required
