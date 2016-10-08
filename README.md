@@ -13,6 +13,8 @@ CREATE YOUR OWN: Linked list class is templated
 
 Other notes:
 
+I haven't had memory leaks on my last 10 runs, it should be clean
+
 I made it so the player could enter unsorted letters, not sure if that was required
 
 Pretty tough, haven't had to overload operators in a long time. 7.5/10 difficulty

@@ -439,6 +439,7 @@ bool handle_input(Player &player, LinkedList<Card> &deck) {
 	return true;
 }
 //Finally, main
+//First seed rand
 //Make the player, the deck, fill the player's hand, take their money, then print all the options
 //If the player typed EXIT, break out of the game
 //If the player is out of money after the last round, break out of the game
@@ -447,6 +448,7 @@ bool handle_input(Player &player, LinkedList<Card> &deck) {
 //This way their destructors are called non explicitely so I'm not a bad
 int main() {
 	{
+		srand(time(NULL));
 		Player player;
 		LinkedList<Card> the_deck;
 		fill_deck(the_deck);
