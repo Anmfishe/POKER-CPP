@@ -218,7 +218,7 @@ bool check_flush(const LinkedList<Card> &hand)
 {
 	Card c = hand.find_at_index(0);
 	string target_suit = c.suit;
-	for (int i = 1; i < 4; i++) {
+	for (int i = 1; i < 5; i++) {
 		c = hand.find_at_index(i);
 		if (c.suit != target_suit) return false;
 	}
@@ -231,7 +231,7 @@ bool check_straight(const LinkedList<Card> &hand)
 {
 	Card c = hand.find_at_index(0);
 	int target_val = c.val + 1;
-	for (int i = 1; i < 4; i++) {
+	for (int i = 1; i < 5; i++) {
 		c = hand.find_at_index(i);
 		if (c.val != target_val) return false;
 		target_val++;
