@@ -67,7 +67,7 @@ void print_options() {
 		<< "	NONE - Discard all your cards" << endl
 		<< "	ALL - Keep all cards in your hand" << endl
 		<< "	EXIT - Quit out of the game" << endl
-		<< "	SWAP - Cheat and swap a card from your hand with a random card from the deck" << endl;
+		<< "	SWAP - Cheat and swap a card from your hand with a card from the deck" << endl;
 }
 //We will use rand to pull random cards from the deck
 int random_range(int max) {
